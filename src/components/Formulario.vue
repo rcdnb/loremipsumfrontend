@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col">
           <label for="name" class="form-label">Nome</label>
-          <input v-model="formProjeto.nome" type="text" class="form-control" id="nomeProjeto" />
+          <input v-model="formProjeto.nome" type="text" class="form-control" id="nomeProjeto" placeholder="Fulano Ciclano do Beltrano" />
         </div>
       </div>
       <div class="row">
@@ -22,8 +22,8 @@
 
       <div class="row">
         <div class="col-12 col-md-6">
-          <label for="Valor" class="form-label">Valor</label>
-          <input v-model="formProjeto.valor" type="number" class="form-control" id="valorInvestido" placeholder="1000.00"/>
+          <label for="Valor" class="form-label">Valor do Projeto</label>
+          <input v-model="formProjeto.valor" type="number" class="form-control" id="valorInvestido" placeholder="1000,00"/>
         </div>
         <div class="col-12 col-md-6">
           <label for="risk" class="form-label">Risco</label>
@@ -72,10 +72,10 @@ export default {
   data() {
     return {
       formProjeto: {
-        nome: null,
+        nome: '',
         data_inicio: this.formatarData(new Date()),
         data_termino: this.formatarData(new Date()),
-        valor: 0,
+        valor: '',
         tipo: null,
         risco: null,
         retorno_esperado: 0,

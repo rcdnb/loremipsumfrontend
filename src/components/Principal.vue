@@ -6,7 +6,7 @@
       <thead class="bg-primary text-white">
         <tr>
           <th>Nome</th>
-          <th>Valor</th>
+          <th>Valor do Projeto</th>
           <th>Risco</th>
           <th>Data de inicio</th>
           <th>Data de término</th>
@@ -184,10 +184,10 @@ export default {
             (id) => id == this.projetos.id
           );
           this.projetos.splice(arrayIndex, 1);
-          toastr.warning("Deletado com Sucesso")
+          toastr.warning("Deletado com sucesso.")
         });
       } else {
-        console.log("apertou não");
+        return
       }
     },
     editRow(projeto) {

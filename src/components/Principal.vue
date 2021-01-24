@@ -1,6 +1,17 @@
 <template>
   <div class="hello">
     <h3 class="mt-5 mb-3">Projetos</h3>
+    
+      <div class="input-group input-group-sm mb-3">
+        <select v-model="search.categoria" class="form-select, border-1, rounded-3, rounded" aria-label="Default select example">
+        <option :value="null">Categoria a ser Pesquisada</option>
+        <option value="nome">Nome</option>
+        <option value="risco">Risco</option>
+        <option value="valor">Valor</option>
+        </select>
+        <input v-on:keyup.enter="pesquisar()" v-model="search.campo" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Procure pelo nome do projeto">
+        <button @click="pesquisar()" type="button" class="btn btn-primary btn-sm">Pesquisar</button>
+    </div>
 
     <table class="table table-striped table-hover table-bordered table-reponsive">
       <thead class="bg-primary text-white">
@@ -134,6 +145,10 @@ export default {
       selecionado: null,
       valorInvestimento: null,
       retornoInvestimento: 0,
+      search: {
+      campo: null,
+      categoria: null,
+      }
     };
   },
 
@@ -167,16 +182,34 @@ export default {
     formataRisco(risco) {
       switch (risco) {
         case 0:
-          return "Baixo";
+          return "0 - Baixo";
         case 1:
-          return "Médio";
+          return "1 - Médio";
         case 2:
-          return "Alto";
+          return "2 - Alto";
       }
     },
     formataParticipantes(participantes) {
       return participantes.split(",");
     },
+
+    pesquisar(){
+      if(this.search.categoria == "nome"){
+      axios.get("http://127.0.0.1:8000/projeto/?nomeProj=" + this.search.campo).then((response) => {
+      this.projetos = response.data;
+      });
+      }else if(this.search.categoria == "risco"){
+        axios.get("http://127.0.0.1:8000/projeto/?riscoProj=" + this.search.campo).then((response) => {
+        this.projetos = response.data;
+      });
+      }else if(this.search.categoria == "valor"){ axios.get("http://127.0.0.1:8000/projeto/?valorProj=" + this.search.campo).then((response) => {
+        this.projetos = response.data;
+      });
+      }else{
+        toastr.error("Selecione a categoria a ser pesquisada", "Erro")
+      }
+    },
+
     deleteRow(id) {
       if (confirm("Deseja deletar essa linha da tabela?")) {
         axios.delete("http://127.0.0.1:8000/projeto/" + id).then(() => {
